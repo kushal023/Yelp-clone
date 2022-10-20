@@ -23,5 +23,24 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: kushal2017328@gmail.com
       PGADMIN_DEFAULT_PASSWORD: pgadmin
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes: 
+      - ./cache:/data:rw
+    environment:
+      REDIS_HOST: cache
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+  api:
+    build: ./api
+    container_name: api_backend
+    ports:
+      - '3005:3005'
+    volumes:
+      - ./api:/api
+      - ./server/node_modules
 volumes:
   db_data:
